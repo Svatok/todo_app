@@ -1,0 +1,48 @@
+.modal-header.details-header
+  %span Task details:
+.modal-body
+  .row
+    .col-md-7
+      %h4.details-block-name Deadline:
+      %p.input-group
+        %input.form-control{type: 'text', readonly: 'true', 'datetime-picker': 'dd MMM yyyy', 'ng-model': 'im.deadline', 'is-open': 'im.status.opened', 'enable-time': 'false'}
+        %span.input-group-btn
+          %button.btn.btn-default{type: 'button', 'ng-click': 'im.open($event)'}
+            %i.glyphicon.glyphicon-calendar
+  .row.comments
+    .col-md-12
+      %h4.details-block-name Comments:
+      .row.vertical-align.coment-bottom-border{'ng-repeat': "comment in im.comments"}
+        .col-md-1.text-right
+          %a{'ng-click': 'im.removeComment(comment)'}
+            %i.fa.fa-times
+        .col-md-8.comment-text
+          {{ comment.commentText }}
+        .col-md-3.text-center
+          %span &nbsp;
+          %a.attachment-button.attachment-download{href: '{{comment.attachment.url}}', 'ng-hide': "comment.attachment.url==null"}
+            %i.fa.fa-paperclip
+      .row.vertical-align.no-comments{'ng-hide': 'im.comments.length > 0'}
+        .col-md-12.comment-text No comments.
+  .row.add-comment
+    .col-md-12
+      %h4.details-block-name Add Comment:
+      %span{'us-spinner': '', 'spinner-on': "im.showSpinner"}
+      %form{'ng-submit': 'AddCommentForm.$valid && im.addComment()', name: 'AddCommentForm', novalidate: ''}
+        .col-xs-9{'ng-class': "{'has-error': AddCommentForm.commentText.$invalid && AddCommentForm.$submitted}"}
+          %textarea.form-control{'ng-model': 'im.commentText', 'placeholder': 'Your comment text ...', name: 'commentText', required: 'true'}
+          .field-message{'ng-if': 'AddCommentForm.$submitted && AddCommentForm.commentText.$invalid'}
+            %div{'ng-show': "AddCommentForm.commentText.$error.required"} Please enter comment
+        .col-xs-3.text-center.comment-buttons
+          .row
+            %a.attachment-button{'ng-model': 'im.attachment', 'ngf-max-size': '5MB', 'ngf-select': '', 'ng-hide': 'im.attachment'}
+              Attach File
+              %i.fa.fa-save
+            %a.attachment-button{'ng-click': "im.attachment=''", 'ng-show': 'im.attachment'}
+              Remove File
+              %i.fa.fa-times
+          .row
+            %button.btn.btn-primary{type: 'submit'}
+              Add Comment
+              %i.fa.fa-plus-square-o
+.modal-footer
