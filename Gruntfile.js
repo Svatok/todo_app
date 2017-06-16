@@ -25,11 +25,25 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  var modRewrite = require('connect-modrewrite');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
     // Project settings
     yeoman: appConfig,
+
+    shell: {
+      startRailsServer: {
+        command: 'rails server',
+        options: {
+          // If async: true were omitted, the rails server
+          // command would prevent subsequent commands
+          // from running.
+          async: true
+        }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -51,6 +65,10 @@ module.exports = function (grunt) {
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'postcss:server']
+      },
+      haml: {
+        files: ['<%= yeoman.app %>/{,*/}*.haml'],
+        tasks: ['haml:server']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -75,22 +93,53 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: [
+        {
+          context: '/api',
+          host: 'localhost',
+          port: 3000
+        },
+        {
+          context: '/omniauth',
+          host: 'localhost',
+          port: 3000
+        },
+        {
+          context: '/uploads',
+          host: 'localhost',
+          port: 3000
+        }
+      ],
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
+          middleware: function (connect, options) {
+            if (!Array.isArray(options.base)) {
+              options.base = [options.base];
+            }
+
+            // Setup the proxy
+            var middlewares = [
+              modRewrite(['!/api|/assets|/omniauth|\\..+$ /index.html']),
+
+              require('grunt-connect-proxy/lib/utils').proxyRequest,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
               ),
               connect().use(
-                '/client/styles',
+                '/styles',
                 connect.static('./client/styles')
               ),
               connect.static(appConfig.app)
             ];
+
+            // Make directory browse-able.
+            var directory = options.directory || options.base[options.base.length - 1];
+            middlewares.push(connect.directory(directory));
+
+            return middlewares;
           }
         }
       },
@@ -158,6 +207,9 @@ module.exports = function (grunt) {
     // Empties folders to start fresh
     clean: {
       dist: {
+        options: {
+          force: true
+        },
         files: [{
           dot: true,
           src: [
@@ -200,6 +252,9 @@ module.exports = function (grunt) {
 
     // Automatically inject Bower components into the app
     wiredep: {
+      options: {
+         cwd: './'
+      },
       app: {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//
@@ -225,7 +280,26 @@ module.exports = function (grunt) {
         ignorePath: /(\.\.\/){1,2}bower_components\//
       }
     },
-
+    haml: {
+      server: {
+        files: [{
+          expand: true,
+          cwd: './client/',
+          src: '**/*.haml',
+          dest: '.tmp',
+          ext: '.html'
+        }]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: '**/*.haml',
+          dest: '<%= yeoman.dist %>',
+          ext: '.html'
+        }]
+      },
+    },
     // Compiles Sass to CSS and generates necessary files if requested
     compass: {
       options: {
@@ -245,6 +319,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
+          cssDir: '<%= yeoman.dist %>/styles',
           generatedImagesDir: '<%= yeoman.dist %>/images/generated'
         }
       },
@@ -302,32 +377,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
-    // The following *-min tasks will produce minified files in the dist folder
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
 
     imagemin: {
       dist: {
@@ -422,9 +471,24 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }, {
           expand: true,
+          cwd: './bower_components/',
+          src: '**/*',
+          dest: '<%= yeoman.dist %>/bower_components/'
+        }, {
+          expand: true,
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: './client_app/scripts/',
+          src: '**/*',
+          dest: '<%= yeoman.dist %>/scripts/'
+        },{
+          expand: true,
+          cwd: './client_app/images/',
+          src: '**/*',
+          dest: '<%= yeoman.dist %>/images/'
         }]
       },
       styles: {
@@ -445,7 +509,6 @@ module.exports = function (grunt) {
       ],
       dist: [
         'compass:dist',
-        'imagemin',
         'svgmin'
       ]
     },
@@ -467,8 +530,11 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'haml:server',
       'wiredep',
       'concurrent:server',
+      'configureProxies',
+      'shell:startRailsServer',
       'postcss:server',
       'connect:livereload',
       'watch'
@@ -482,6 +548,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'haml',
     'wiredep',
     'concurrent:test',
     'postcss',
@@ -492,19 +559,10 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'useminPrepare',
     'concurrent:dist',
-    'postcss',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
+    'postcss:dist',
+    'haml:dist',
     'copy:dist',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'filerev',
-    'usemin',
-    'htmlmin'
   ]);
 
   grunt.registerTask('default', [
@@ -513,4 +571,9 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-};
+
+    grunt.registerTask('heroku:production', 'build');
+
+    grunt.loadNpmTasks('grunt-connect-proxy');
+    grunt.loadNpmTasks('grunt-shell-spawn');
+  };

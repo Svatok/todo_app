@@ -1,0 +1,21 @@
+.authform
+  %form{'ng-init': 'changePasswordForm = ()', 'ng-submit': 'changePassForm.$valid && updatePassword(changePasswordForm)', name: 'changePassForm', role: 'form', novalidate: ''}
+    %h3 Change Password
+    .form-group{'ng-class': "{'has-error': changePassForm.password.$invalid && changePassForm.$submitted}"}
+      %label{for: 'password'} Password
+      %input.form-control{name: 'password', 'ng-model': 'changePasswordForm.password', required: 'true', 'ng-minlength': '8', type: 'password'}
+      .field-message{'ng-if': 'changePassForm.$submitted && changePassForm.password.$invalid'}
+        %div{'ng-show': "changePassForm.password.$error.required"} Please enter password
+        %div{'ng-show': "changePassForm.password.$error.minlength"} Password must be at least 8 characters
+    .form-group{'ng-class': "{'has-error': changePassForm.password_confirmation.$invalid && changePassForm.$submitted}"}
+      %label{for: 'password_confirmation'} Password confirmation
+      %input.form-control{name: 'password_confirmation', 'ng-model': 'changePasswordForm.password_confirmation', required: 'true', type: 'password', 'compare-to': "changePasswordForm.password"}
+      .field-message{'ng-if': 'changePassForm.$submitted && changePassForm.password_confirmation.$invalid'}
+        %div{'ng-show': "changePassForm.password_confirmation.$error.required"} Please enter password confirmation
+        %div{'ng-show': "changePassForm.password_confirmation.$error.compareTo && changePassForm.password.$valid"} The passwords do not match
+    %button.btn.btn-primary.right{type: 'submit'} Change password
+    .row.text-center
+      .col-xs-3
+        %a{tabindex: '-1', 'ng-click': 'auth.show_sign_in()'} Sign in
+      .col-xs-2
+        Or

@@ -1,0 +1,87 @@
+<!doctype html>
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    %title ToDo
+    %base{href: "/"}
+    %meta{content: '', name: 'description'}
+    %meta{content: 'width=device-width', name: 'viewport'}
+    / Place favicon.ico and apple-touch-icon.png in the root directory
+    / build:css(.) styles/vendor.css
+    / bower:css
+    / endbower
+    / endbuild
+    / build:css(.tmp) styles/main.css
+    %link{href: 'styles/application.css', rel: 'stylesheet'}
+    %link{href: 'bower_components/angular-xeditable/dist/css/xeditable.css', rel: 'stylesheet'}
+    %link{href: 'bower_components/angular-flash-alert/dist/angular-flash.min.css', rel: 'stylesheet'}
+    / endbuild
+  %body{'ng-app': 'clientAppApp', 'ng-controller': 'AuthCtrl as auth'}
+    /[if lte IE 8]
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    / Add your site or application content here
+    .header
+      .container
+        .col-xs-8.col-xs-offset-2
+          .user-control.pull-right{'ng-show': 'user.signedIn'}
+            %a.btn.btn-primary.btn-xs.logout{'ng-click': 'signOut()'} Sign out
+        .logo
+          simple todo list
+          .small from ruby garage
+    .container
+      %flash-message.alert-fixed
+      %div{'ui-view': ''}
+    .footer
+      .container
+        .copyright
+          &copy; Ruby Garage
+    / Google Analytics: change UA-XXXXX-X to be your site's ID
+    :javascript
+      !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+      (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+      r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+      }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-XXXXX-X');
+      ga('send', 'pageview');
+    / build:js(.) scripts/vendor.js
+    / bower:js
+    %script{src: 'bower_components/jquery/dist/jquery.js'}
+    %script{src: 'bower_components/angular/angular.js'}
+    %script{src: 'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js'}
+    %script{src: 'bower_components/angular-animate/angular-animate.js'}
+    %script{src: 'bower_components/angular-cookies/angular-cookies.js'}
+    %script{src: 'bower_components/angular-resource/angular-resource.js'}
+    %script{src: 'bower_components/angular-route/angular-route.js'}
+    %script{src: 'bower_components/angular-sanitize/angular-sanitize.js'}
+    %script{src: 'bower_components/angular-touch/angular-touch.js'}
+    %script{src: 'bower_components/angularjs-rails-resource/angularjs-rails-resource.js'}
+    %script{src: 'bower_components/angular-cookie/angular-cookie.js'}
+    %script{src: 'bower_components/ng-token-auth/dist/ng-token-auth.js'}
+    %script{src: 'bower_components/angular-xeditable/dist/js/xeditable.js'}
+    %script{src: 'bower_components/angular-ui-sortable/sortable.js'}
+    %script{src: 'bower_components/jquery-ui/jquery-ui.js'}
+    %script{src: 'bower_components/angular-bootstrap/ui-bootstrap.js'}
+    %script{src: 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js'}
+    %script{src: 'bower_components/edit_dialog/edit_dialog.js'}
+    %script{src: 'bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js'}
+    %script{src: 'bower_components/ng-file-upload/ng-file-upload.js'}
+    %script{src: 'bower_components/angular-ui-router/release/angular-ui-router.js'}
+    %script{src: 'bower_components/angular-flash-alert/dist/angular-flash.min.js'}
+    %script{src: 'bower_components/angular-spinner/dist/angular-spinner.min.js'}
+    %script{src: 'bower_components/angular-messages/angular-messages.js'}
+    / endbower
+    / endbuild
+    / build:js({.tmp,app}) scripts/scripts.js
+    %script{src: '/scripts/app.js'}
+    %script{src: '/scripts/config/state.js'}
+    %script{src: '/scripts/config/auth.js'}
+    %script{src: '/scripts/config/flash.js'}
+    %script{src: '/scripts/models/todo.js'}
+    %script{src: '/scripts/models/item.js'}
+    %script{src: '/scripts/models/comment.js'}
+    %script{src: '/scripts/directives/compare-to.directive.js'}
+    %script{src: '/scripts/controllers/auth.controller.js'}
+    %script{src: '/scripts/controllers/todos.controller.js'}
+    %script{src: '/scripts/controllers/items.controller.js'}
+    / endbuild

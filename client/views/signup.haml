@@ -1,0 +1,25 @@
+.authform
+  %form{'ng-init': 'registrationForm = ()', 'ng-submit': 'signUpForm.$valid && submitRegistration(registrationForm)', role: 'form', name: 'signUpForm', novalidate: ''}
+    %h3 Sign up
+    .form-group{'ng-class': "{'has-error': signUpForm.email.$invalid && signUpForm.$submitted}"}
+      %label{for: 'email'} Email address
+      %input.form-control{name: 'email', 'ng-model': 'registrationForm.email', required: 'true', type: 'email'}
+      .field-message{'ng-if': 'signUpForm.$submitted && signUpForm.email.$invalid'}
+        %div{'ng-show': "signUpForm.email.$error.required"} Please enter email
+        %div{'ng-show': "signUpForm.email.$error.email"} Must be a valid email
+    .form-group{'ng-class': "{'has-error': signUpForm.password.$invalid && signUpForm.$submitted}"}
+      %label{for: 'password'} Password
+      %input.form-control{name: 'password', 'ng-model': 'registrationForm.password', required: 'true', 'ng-minlength': '8', type: 'password'}
+      .field-message{'ng-if': 'signUpForm.$submitted && signUpForm.password.$invalid'}
+        %div{'ng-show': "signUpForm.password.$error.required"} Please enter password
+        %div{'ng-show': "signUpForm.password.$error.minlength"} Password must be at least 8 characters
+    .form-group{'ng-class': "{'has-error': signUpForm.password_confirmation.$invalid && signUpForm.$submitted}"}
+      %label{for: 'password_confirmation'} Password confirmation
+      %input.form-control{name: 'password_confirmation', 'ng-model': 'registrationForm.password_confirmation', required: 'true', type: 'password', 'compare-to': "registrationForm.password"}
+      .field-message{'ng-if': 'signUpForm.$submitted && signUpForm.password_confirmation.$invalid'}
+        %div{'ng-show': "signUpForm.password_confirmation.$error.required"} Please enter password confirmation
+        %div{'ng-show': "signUpForm.password_confirmation.$error.compareTo && signUpForm.password.$valid"} The passwords do not match
+    %button.btn.btn-primary.right{type: 'submit'} Register
+    %span
+      Already registered?
+      %a{tabindex: '-1', 'ng-click': 'auth.showSignIn()'} Sign in

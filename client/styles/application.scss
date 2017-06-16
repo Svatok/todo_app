@@ -1,0 +1,83 @@
+@import "devise.scss";
+@import "todo.scss";
+
+html {
+  border-top: 6px solid #333;
+}
+
+body {
+  padding: 20px 0 0;
+  background-color: #ba680e;
+  background-image: image-url('bg.jpg');
+  background-repeat: round;
+  background-attachment: fixed;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
+
+a[ng-click]{
+    cursor: pointer;
+}
+
+.logo {
+  font-size: 29px;
+  text-transform: uppercase;
+  color: #333;
+  line-height: 120%;
+  text-shadow: 0 1px 0 #fff;
+  text-align: center;
+  font-weight: bold;
+  margin: 40px 60px 41px;
+  cursor: default;
+
+  .small {
+    font-weight: normal;
+    font-size: 18px;
+  }
+}
+.copyright {
+    font-size: 14px;
+    line-height: 120%;
+    color: white;
+    text-align: center;
+    margin-bottom: 31px;
+}
+
+.logout {
+  background-image: -moz-linear-gradient(37% 0% -90deg,rgb(81,131,190) 0%,rgb(55,93,158) 99%);
+  background-image: -webkit-gradient(linear,37% 0%,37% 100%,color-stop(0, rgb(81,131,190)),color-stop(0.99, rgb(55,93,158)));
+  background-image: -webkit-linear-gradient(-90deg,rgb(81,131,190) 0%,rgb(55,93,158) 99%);
+  background-image: -o-linear-gradient(-90deg,rgb(81,131,190) 0%,rgb(55,93,158) 99%);
+  background-image: -ms-linear-gradient(-90deg,rgb(81,131,190) 0%,rgb(55,93,158) 99%);
+  background-image: linear-gradient(-90deg,rgb(81,131,190) 0%,rgb(55,93,158) 99%);
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.field-message {
+  color:#e9322d;
+  font-size: 90%;
+  margin-left: 0.5em;
+}
+.alert-fixed {
+    position:fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index:9999;
+    margin-top: 20px;
+}

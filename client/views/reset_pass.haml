@@ -1,0 +1,15 @@
+.authform
+  %form{'ng-init': 'passwordResetForm = ()', 'ng-submit': 'resetPassForm.$valid && requestPasswordReset(passwordResetForm)', name: 'resetPassForm', role: 'form', novalidate: ''}
+    %h3 Forgot your password?
+    .form-group{'ng-class': "{'has-error': resetPassForm.email.$invalid && resetPassForm.$submitted}"}
+      %label{for: 'email'} Email address
+      %input.form-control{name: 'email', 'ng-model': 'passwordResetForm.email', required: 'true', type: 'email'}
+      .field-message{'ng-if': 'resetPassForm.$submitted && resetPassForm.email.$invalid'}
+        %div{'ng-show': "resetPassForm.email.$error.required"} Please enter email
+        %div{'ng-show': "resetPassForm.email.$error.email"} Must be a valid email
+    %button.btn.btn-primary.right{type: 'submit'} Reset password
+    .row.text-center
+      .col-xs-3
+        %a{tabindex: '-1', 'ng-click': 'auth.showSignIn()'} Sign in
+      .col-xs-2
+        Or
