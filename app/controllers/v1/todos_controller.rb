@@ -3,7 +3,7 @@
 module V1
   class TodosController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_todo, only: %i[show update destroy]
+    before_action :set_todo, only: %i(show update destroy)
 
     def_param_group :todo do
       param :todo, Hash, required: true, desc: 'Todo (Project) details' do

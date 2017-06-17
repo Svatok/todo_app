@@ -15,8 +15,8 @@ module TodoApp
         origins '*'
         resource '*',
                  headers: :any,
-                 expose:  %w[access-token expiry token-type uid client],
-                 methods: %i[get post options patch delete put]
+                 expose:  %w(access-token expiry token-type uid client),
+                 methods: %i(get post options patch delete put)
       end
     end
   end

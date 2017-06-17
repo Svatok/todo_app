@@ -4,7 +4,7 @@ module V1
   class ItemsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_todo
-    before_action :set_todo_item, only: %i[show update destroy]
+    before_action :set_todo_item, only: %i(show update destroy)
 
     def_param_group :path_params do
       param :id, :number, required: true

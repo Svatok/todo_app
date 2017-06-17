@@ -63,10 +63,10 @@ group :test do
   gem 'factory_girl_rails'
   gem 'ffaker'
   gem 'poltergeist'
-  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
-  gem "webdrivers"
+  gem 'webdrivers'
 end
 
 gem 'active_model_serializers'

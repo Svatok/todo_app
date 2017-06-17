@@ -131,7 +131,7 @@ end
 
 Capybara.server_port = 3001
 
-options = {js_errors: false, inspector: true}
+options = { js_errors: false, inspector: true }
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, options)
 end

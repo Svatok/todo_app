@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20_170_520_221_622) do
     t.index ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true, using: :btree
     t.index ['email'], name: 'index_users_on_email', unique: true, using: :btree
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true, using: :btree
-    t.index %w[uid provider], name: 'index_users_on_uid_and_provider', unique: true, using: :btree
+    t.index %w(uid provider), name: 'index_users_on_uid_and_provider', unique: true, using: :btree
   end
 
   add_foreign_key 'comments', 'items'
