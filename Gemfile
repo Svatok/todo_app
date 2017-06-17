@@ -38,7 +38,6 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'rspec-rails'
 end
 
 group :development do
@@ -53,6 +52,7 @@ group :development do
 end
 
 group :test do
+  gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-angular'
   gem 'capybara-email'
@@ -63,8 +63,10 @@ group :test do
   gem 'factory_girl_rails'
   gem 'ffaker'
   gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
+  gem "webdrivers"
 end
 
 gem 'active_model_serializers'

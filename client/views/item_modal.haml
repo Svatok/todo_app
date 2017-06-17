@@ -14,7 +14,7 @@
       %h4.details-block-name Comments:
       .row.vertical-align.coment-bottom-border{'ng-repeat': "comment in im.comments"}
         .col-md-1.text-right
-          %a{'ng-click': 'im.removeComment(comment)'}
+          %a.remove-comment{'ng-click': 'im.removeComment(comment)'}
             %i.fa.fa-times
         .col-md-8.comment-text
           {{ comment.commentText }}

@@ -22,7 +22,7 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'client',
-    dist: 'dist'
+    dist: 'public'
   };
 
   var modRewrite = require('connect-modrewrite');
@@ -481,12 +481,12 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
-          cwd: './client_app/scripts/',
+          cwd: '<%= yeoman.app %>/scripts/',
           src: '**/*',
           dest: '<%= yeoman.dist %>/scripts/'
         },{
           expand: true,
-          cwd: './client_app/images/',
+          cwd: '<%= yeoman.app %>/images/',
           src: '**/*',
           dest: '<%= yeoman.dist %>/images/'
         }]
