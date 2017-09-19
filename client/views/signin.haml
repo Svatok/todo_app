@@ -1,0 +1,20 @@
+.authform
+  %form{'ng-submit': 'signInForm.$valid && submitLogin(loginForm)', role: 'form', "ng-init": "loginForm = ()", name: 'signInForm', novalidate: ''}
+    %h3 Sign in
+    .form-group{'ng-class': "{'has-error': signInForm.email.$invalid && signInForm.$submitted}"}
+      %a.right{tabindex: '-1', 'ng-click': 'auth.showSignUp()'} Sign up
+      %label{for: 'email'} Email address
+      %input.form-control{type: 'email', name: 'email', id: 'email', 'ng-model': 'loginForm.email', placeholder: 'Email', required: 'true'}
+      .field-message{'ng-if': 'signInForm.$submitted && signInForm.email.$invalid'}
+        %div{'ng-show': "signInForm.email.$error.required"} Please enter email
+        %div{'ng-show': "signInForm.email.$error.email"} Must be a valid email
+    .form-group{'ng-class': "{'has-error': signInForm.password.$invalid && signInForm.$submitted}"}
+      %a.right{tabindex: '-1', 'ng-click': 'auth.showResetPass()'} Forgot password?
+      %label{for: 'password'} Password
+      %input.form-control{type: 'password', name: 'password', id: 'password', 'ng-model': 'loginForm.password', placeholder: 'Password', required: 'true'}
+      .field-message{'ng-if': 'signInForm.$submitted && signInForm.password.$invalid'}
+        %div{'ng-show': "signInForm.password.$error.required"} Please enter password
+    %button.btn.btn-primary.right{type: 'submit'} Sign in
+    %a.btn{'ng-click': "authenticate('facebook')"}
+      %i.fa.fa-facebook.view
+      %span Facebook in!

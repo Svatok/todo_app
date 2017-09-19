@@ -1,0 +1,42 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$fa-font-path: "../bower_components/font-awesome/fonts";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "font-awesome/scss/font-awesome.scss";
+// endbower
+
+.authform {
+  padding-top: 30px;
+  max-width: 320px;
+  margin: 0 auto;
+
+  form {
+  	@extend .well;
+    @extend .well-lg;
+    padding-bottom: 40px;
+  }
+
+  .right {
+  	float: right;
+  }
+
+  .button {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+
+  #error_explanation {
+    @extend .alert;
+    @extend .alert-danger;
+  }
+
+  #error_explanation h2 {
+    font-size: 16px;
+  }
+
+  .g-recaptcha {
+    transform: scale(0.89);
+    transform-origin: 0 0;
+  }
+
+}

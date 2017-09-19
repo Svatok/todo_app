@@ -1,0 +1,73 @@
+.main-container{'ng-controller': 'TodosCtrl as t'}
+  .row
+    .col-xs-8.col-xs-offset-2
+      .projects{'ui-sortable': 't.sortableOptions', 'ng-model': 't.todos'}
+        .project{'ng-repeat': 'todo in t.todos'}
+          .project-header
+            .project-field
+              %h2{'editable-text': 'todo.title', 'e-form': 'textBtnForm', buttons: 'no', onbeforesave: 't.beforeSaveTodo($data)', onaftersave: 't.updateTodo(todo)'} {{todo.title}}
+            .control{'ng-hide': 'textBtnForm.$visible'}
+              %ul
+                %li
+                  %a.edit{'ng-click': 'textBtnForm.$show()'}
+                %li
+                  %a.delete{'ng-click': 't.removeTodo(todo)'}
+            .control-editing{'ng-show': 'textBtnForm.$visible'}
+              %ul
+                %li
+                  %a.save{'ng-click': 'textBtnForm.$submit()'}
+                %li
+                  %a.cancel
+          .tasks-container{'ng-controller': 'ItemsCtrl as i'}
+            %form.new_task{'ng-submit': 'i.addTodoItem(todo)'}
+              .create-task-header
+                .create-task-in.input-group
+                  %input.form-control{'ng-model': 'todo.newItemName', placeholder: 'Start typing here to create a task...', type: 'text'}
+                  %span.input-group-btn.add-task
+                    %button.btn.add-task{type: 'submit'} Add Task
+            .task-list
+              %table.tasks
+                %tbody{'ui-sortable': 'i.sortableOptions', 'ng-model': 'todo.items'}
+                  %tr.task-item{'ng-repeat': 'item in todo.items'}
+                    %td.task-status
+                      %input.task-check{type: 'checkbox', 'ng-model': 'item.done', 'ng-checked': 'item.done'}
+                      %label
+                    %td.task-name
+                      .left-border
+                        .task-name-text{'editable-text': 'item.name', 'e-form': 'ItemNameForm', buttons: 'no', onbeforesave: 'i.beforeSaveItem($data)', onaftersave: 'i.updateItem(item)', 'ng-class': "item.done ? 'task-done' : ''", 'ng-click': 'i.toggleDone(item)'}
+                          {{ item.name }}
+                          %span.label.label-danger.deadline
+                    %td.task-control
+                      .control{'ng-hide': 'ItemNameForm.$visible'}
+                        %ul
+                          %li
+                            %a.sort
+                          %li
+                            %a.edit{'ng-click': 'ItemNameForm.$show()'}
+                          %li
+                            %a.comment{'ng-click': 'i.open(item)'}
+                          %li
+                            %a.delete{'ng-click': 'i.removeTodoItem(item)'}
+                      .control-editing{'ng-show': 'ItemNameForm.$visible'}
+                        %ul
+                          %li
+                            %a.save{'ng-click': 'ItemNameForm.$submit()'}
+                          %li
+                            %a.cancel
+  .row{'ng-show': 't.addTodoShow'}
+    .col-xs-8.col-xs-offset-2
+      .projects
+        .add-project
+          .project-header
+            .project-field
+              %h2{'editable-text': 't.title', 'e-form': 'AddTodoForm', onshow: 't.showAddTodo()', onhide: 't.hideAddTodo()', buttons: 'no', onbeforesave: 't.beforeSaveTodo($data)', onaftersave: 't.addTodo(todo)'}
+              .control
+                %ul
+                  %li
+                    %a.save{'ng-click': 'AddTodoForm.$submit()'}
+                  %li
+                    %a.cancel
+  .row
+    .col-xs-12.div_add_button_project
+      %a.btn.btn-primary.add-project{'ng-click': 'AddTodoForm.$show()'}
+        %span.icon-plus Add TODO List

@@ -1,30 +1,25 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name todosAppApp
- * @description
- * # todosAppApp
- *
- * Main module of the application.
- */
 angular
-  .module('todosAppApp', [
+  .module('clientAppApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
+    'ui.router',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'rails',
+    'ng-token-auth',
+    'xeditable',
+    'ui.sortable',
+    'ui.bootstrap',
+    'ui.bootstrap.datetimepicker',
+    'ngFileUpload',
+    'ngFlash',
+    'angularSpinner',
+    'ngMessages'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
+  .run(function(editableOptions) {
+    editableOptions.theme = 'bs3';
   });

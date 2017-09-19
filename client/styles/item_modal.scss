@@ -1,0 +1,71 @@
+.details-header {
+  background-image: linear-gradient(-90deg, #5183be 0%, #375d9e 99%);
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 0px 1px 0px #28405D;
+}
+
+.comment-text {
+  font-size: 13px;
+  line-height: 120%;
+  font-weight: bold;
+  color: #999;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.details-block-name {
+  font-size: 18px;
+  color: #333;
+  text-shadow: 0 1px 0 #fff;
+  font-weight: bold;
+}
+
+.add-comment input {
+    padding: 15px;
+    height: 50px;
+    border: none;
+    width: 90%;
+}
+
+.comments, .add-comment {
+  margin-top: 20px;
+}
+
+.attachment-button{
+    font-size:18px;
+    padding:7px;
+    cursor: pointer;
+}
+
+.attachment-download{
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+  margin: 0 15px;
+  min-height: 50px;
+}
+
+.coment-bottom-border {
+  border-bottom: 1px dotted #ccc;
+}
+
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: flex;
+  align-items: center;
+}
+
+.vertical-align > div:first-child,
+.vertical-align > div:last-child {
+  justify-content: center;
+  .fa-times {
+    color: red;
+  }
+}
