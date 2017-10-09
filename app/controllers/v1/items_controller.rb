@@ -66,7 +66,7 @@ module V1
     param_group :item
     def update
       @item.update!(item_params)
-      head :no_content
+      json_response(@item)
     end
 
     api! 'Delete Item (Task)'
